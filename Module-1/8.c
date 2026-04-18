@@ -19,6 +19,12 @@ int main() {
         scanf("%d", &arr[i]);
     }
 
+    /*
+    
+    The variables max and min should be declared after taking input of elements otherwise values initialized as garbage values
+    
+    */
+
     int max = arr[0]; // for storing maximum value
     int min = arr[0]; // for storing minimum value
 
