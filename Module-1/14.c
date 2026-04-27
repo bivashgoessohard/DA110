@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 int calculate_determinant(size_t n, int a[n][n]) {
-    int determinant = ((a[0][0] * (a[1][1] * a[2][2] - a[2][1] * a[1][2])) + (a[0][1] * (a[1][0] * a[2][2] - a[2][0] * a[1][2])) - (a[0][2] * (a[1][0] * a[2][1] - a[2][0] * a[1][1])));
+    int determinant = ((a[0][0] * (a[1][1] * a[2][2] - a[2][1] * a[1][2])) - (a[0][1] * (a[1][0] * a[2][2] - a[2][0] * a[1][2])) + (a[0][2] * (a[1][0] * a[2][1] - a[2][0] * a[1][1])));
     return determinant;
 }
 
@@ -14,7 +14,7 @@ int calculate_determinant(size_t n, int a[n][n]) {
 int read_matrix (size_t n, int arr[n][n]) {
     for (size_t i = 0; i < n; i++) {
         for (size_t j = 0; j < n; j++) {
-            printf("Enter element - [%zu][%zu]: ", i + 1, j + 1);
+            printf("==> Enter element - [%zu][%zu]: ", i + 1, j + 1);
             if (scanf("%d", &arr[i][j]) != 1) {
                 fprintf(stderr, "Invalid input!\n");
                 return 0;
@@ -59,7 +59,7 @@ int main(void) {
     // Call determinant function
     int determinant = calculate_determinant(n, arr);
 
-    printf("The determinant of the matrix is: %d\n", determinant);
+    printf("=>>> Determinant: %d\n", determinant);
 
     free(arr);
     
