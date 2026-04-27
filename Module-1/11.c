@@ -4,11 +4,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
 #define ROWS 3
 #define COLS 3
 
 int main() {
-    // Dynamically allocate memory
+    // Dynamically allocate memory for 3x3 matrix
     int (*arr)[COLS] = malloc(ROWS * sizeof(*arr));
 
     // Check memory allocation
@@ -17,27 +18,28 @@ int main() {
         return 1;
     }
 
-    // Take input from user
-    printf("====Enter the elements of 3 x 3 matrix====\n");
+    // Input elements
+    printf("==== Enter the elements of 3 x 3 matrix ====\n");
+
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
-            printf("Enter element [%d] [%d]: ", i+1, j+1);
+            printf("Enter element [%d][%d]: ", i + 1, j + 1);
             scanf("%d", &arr[i][j]);
         }
     }
 
+    // Print matrix
+    printf("\n==== The Matrix (3 x 3) ====\n");
 
-    printf("\n");
-    printf("\n");
-    // Print the matrix
-    printf("====The Matrix (3 x 3)====\n");
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLS; j++) {
-            printf("%d \t", arr[i][j]);
+            printf("%d\t", arr[i][j]);
         }
         printf("\n");
-        printf("\n");
     }
-    printf("\n");
 
+    // Free memory
+    free(arr);
+
+    return 0;
 }
