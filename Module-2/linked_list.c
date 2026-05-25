@@ -7,6 +7,11 @@ typedef struct Node {
     struct Node *next;
 } Node;
 
+
+//Input funtion: at any point e.g., first, last, n-th position
+// TODO Tomorrow
+
+// Reverse operation
 Node *reverseList(Node **head) {
     Node *prevNode, *currentNode, *nextNode;
 
@@ -26,6 +31,29 @@ Node *reverseList(Node **head) {
     return *head;
 }
 
+// Traverse Function
+void traverse(Node *head) {
+    Node *temp = head;
+
+    while(temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+// Free memory function
+void freeMemory(Node **headRef) {
+    Node *current = *headRef;
+    while(current != NULL) {
+        Node *next = current->next;
+        free(current);
+        current = next;
+    }
+    *headRef = NULL;
+}
+
+// MAIN FUNCTION
 int main(void) {
 
     size_t n; int value;
@@ -39,6 +67,7 @@ int main(void) {
 
     head = NULL;
 
+    // Input to linked list of n number of elements
     for (size_t i = 0; i < n; i++) {
         // Create a node first, allocate memory
         newNode = malloc(sizeof(Node));
@@ -62,29 +91,17 @@ int main(void) {
         }
     }
 
-    Node *current = head;
-    while(current != NULL) {
-        printf("%d ", current->data);
-        current = current->next;
-    }
-    printf("\n");
+    // Call traverse function before reversing
+    traverse(head);
+    
+    // Reverse function
+    reverseList(&head);
 
-    Node *newHead = reverseList(&head);
-
-    Node *newCurrent = newHead;
-    while(newCurrent != NULL) {
-        printf("%d ", newCurrent->data);
-        newCurrent = newCurrent->next;
-    }
-    printf("\n");
-
-    newCurrent = newHead;
-
-    while(newCurrent != NULL) {
-        Node *next = newCurrent->next;
-        free(newCurrent);
-        newCurrent = next;
-    }
+    // Call traverse function after reversing
+    traverse(head);
+    
+    // Free memory
+    freeMemory(&head);
 
     return 0;
 }
