@@ -79,13 +79,14 @@ void addNode(Node **head, int element, size_t position) {
     newNode->next = NULL;
 
     if (*head == NULL) {
+        free(newNode);
         return;
     }
 
     ptr = *head;
 
     for (size_t i = 1; i < position - 1; i++) {
-        if (ptr == NULL) {
+        if (ptr->next == NULL) {
             printf("Position out of range!\n");
             free(newNode);
             return;
@@ -141,30 +142,67 @@ void deleteLast(Node **head) {
 
 // Delete at any position
 void deleteNode(Node **head, size_t position) {
+
     if (position < 1) {
         printf("Invalid position!\n");
         return;
     }
+
     if (*head == NULL) {
-        printf("List is empty!");
+        printf("List is empty!\n");
+        return;
+    }
+
+    // Delete first node
+    if (position == 1) {
+        Node *temp = *head;
+        *head = (*head)->next;
+        free(temp);
+        return;
     }
 
     Node *curr = *head;
 
-    
-    if ((*head)->next == NULL) {
-        free(*head);
-    } else {
-        size_t count = 1;
-        while (count < position - 1) {
-            curr = curr->next;
-            count++;
-        }
-        Node *temp = curr->next;
-        curr->next = curr->next->next;
-        free(temp);
-        
+    size_t count = 1;
+
+    // Move to previous node of target position
+    while (count < position - 1 && curr != NULL) {
+        curr = curr->next;
+        count++;
     }
+
+    // Position out of range
+    if (curr == NULL || curr->next == NULL) {
+        printf("Position out of range!\n");
+        return;
+    }
+
+    Node *temp = curr->next;
+
+    curr->next = temp->next;
+
+    free(temp);
+}
+
+// Update value at any position
+void updateNode(Node *head, int element, size_t position) {
+    if (position < 1 || head == NULL) {
+        printf("Invalid operation!\n");
+        return;
+    }
+
+    Node *ptr = head;
+
+    for (size_t i = 1; i < position && ptr != NULL; i++) {
+        ptr = ptr->next;
+    }
+
+    if (ptr == NULL) {
+        printf("Position out of range!\n");
+        return;
+    }
+
+    ptr->data = element;
 }
 
 // Reverse operation
@@ -274,8 +312,12 @@ int main(void) {
     deleteFirst(&head);
     traverse(head);
 
-    // Delete last
+    // Delete at pos 3
     deleteNode(&head, 3);
+    traverse(head);
+
+    // Update Node data
+    updateNode(head, 89, 25);
     traverse(head);
     
     // Free memory
