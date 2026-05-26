@@ -62,7 +62,6 @@ void traverseList(Node *head) {
 int main(void) {
     size_t n;
     int value;
-    int digit = 0;
 
     Node *head = NULL;
     Node *temp, *newNode;
