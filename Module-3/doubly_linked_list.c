@@ -57,6 +57,18 @@ void addNode(Node **head, int element, size_t position) {
     curr->next = newNode;
 }
 
+
+int countNode(Node *head) {
+    Node *ptr = head;
+    int count = 0;
+
+    while (ptr != NULL) {
+        count++;
+        ptr = ptr->next;
+    }
+    return count;
+}
+
 // Traverse List 
 void traverseList(Node *head) {
     if (head == NULL) {
@@ -146,17 +158,20 @@ int main(void) {
 
     printf("The list is:\n");
     traverseList(head);
-    // printf("\n");
-    // printf("The list from backward is:\n");
-    // traverseTail(tail);
+    printf("\n");
+    printf("The list from backward is:\n");
+    traverseTail(tail);
 
     addNode(&head, 10, 4);
     traverseList(head);
+
+    int count = countNode(head);
+    printf("The number of nodes: %d\n", count);
 
 
     // Free memory
     freeMemory(&head);
     tail = NULL;
-    
+
     return 0;
 }
