@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct Node {
     int data;
@@ -69,21 +70,49 @@ void display() {
     printf("\n");
 }
 
-// Main function to demonstrate stack operations
-int main() {
+
+int main(void) {
+    const char s[] = "[(3+5)-{(4+8)/2}]";
     createStack();
 
-    PUSH(10);
-    PUSH(5);
-    PUSH(8);
+    int length = strlen(s);
+    for (int i = 0; i < length; i++) {
+        if (s[i] == '[' || s[i] == '{' || s[i] == '(') {
+            PUSH(s[i]);
+        }
+        else if(s[i] == ')') {
+            if (isEmpty() || topOfStack() != '(') {
+                printf("Syntax error found!\n");
+                return 1;
+            }
+            POP();
+        }
+        else if(s[i] == '}') {
+            if (isEmpty() || topOfStack() != '{') {
+                printf("Syntax error found!\n");
+                return 1;
+            }
+            POP();
+        }
+        else if(s[i] == ']') {
+            if (isEmpty() || topOfStack() != '[') {
+                printf("Syntax error found!\n");
+                return 1;
+            }
+            POP();
+        }
+    }
+    if(isEmpty()) {
+        printf("Parentheses matched.\n");
+    } else {
+        printf("Sysntax error found.\n");
+    }
 
-    display(); // Stack: 8 5 10
-
-    printf("Popped: %d\n", POP()); // Popped: 8
-
-    display(); // Stack: 5 10
-
-    printf("Size: %d\n", sizeOfStack()); // Size: 2
+    while (!isEmpty()) {
+        POP();
+    }
+    free(head);
+    head = NULL;
 
     return 0;
 }
